@@ -1,0 +1,184 @@
+[data-controller="ransom-crop"] {
+  --rc-bg: #f3f4f6;
+  --rc-card: #fff;
+  --rc-text: #23272f;
+  --rc-muted: #656d7a;
+  --rc-border: #d5d9e0;
+  --rc-border-strong: #aab1bd;
+  --rc-accent: #34495e;
+  --rc-accent-hover: #26384a;
+  --rc-accent-soft: #e6eaef;
+  --rc-radius: 3px;
+  --rc-gap: .75rem;
+  --rc-control-h: 2.5rem;
+
+  color: var(--rc-text);
+  background: var(--rc-bg);
+  padding: 1rem;
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-controller="ransom-crop"] {
+    --rc-bg: #181a1f;
+    --rc-card: #21242b;
+    --rc-text: #dfe2e8;
+    --rc-muted: #98a0ad;
+    --rc-border: #333843;
+    --rc-border-strong: #4b5262;
+    --rc-accent: #8fa6bd;
+    --rc-accent-hover: #a8bbce;
+    --rc-accent-soft: #2b323c;
+  }
+}
+
+/* Toolbar */
+.ransom-crop-toolbar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--rc-gap);
+  margin-bottom: 1rem;
+}
+
+/* Gruppi */
+.ransom-crop-group {
+  display: grid;
+  align-content: start;
+  gap: var(--rc-gap);
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  background: var(--rc-card);
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+}
+.ransom-crop-group__title {
+  padding: 0 .5rem;
+  margin-left: -.5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--rc-muted);
+}
+
+/* Campi */
+.ransom-crop-field {
+  display: grid;
+  gap: .25rem;
+}
+.ransom-crop-field__label {
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--rc-text);
+}
+
+
+.ransom-crop-field__suffix
+{
+    min-height: var(--rc-control-h);
+      padding: .4rem .625rem;
+        border: 1px;
+
+}
+
+
+.ransom-crop-field__input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--rc-control-h);
+  padding: .4rem .625rem;
+  font: inherit;
+  color: var(--rc-text);
+  background: var(--rc-card);
+  border: 1px solid var(--rc-border-strong);
+  border-radius: var(--rc-radius);
+}
+.ransom-crop-field__input::placeholder { color: var(--rc-muted); }
+.ransom-crop-field__input:hover { border-color: var(--rc-muted); }
+.ransom-crop-field__input:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 0;
+  border-color: var(--rc-accent);
+}
+
+/* Colore: campione quadrato */
+.ransom-crop-field--color .ransom-crop-field__input {
+  width: 4rem;
+  padding: .2rem;
+  cursor: pointer;
+}
+
+/* Zoom */
+.ransom-crop-field--number .ransom-crop-field__input {
+  width: 5em;
+  text-align: right;
+}
+
+/* Pulsanti: base = secondario (contorno) */
+.ransom-crop-button {
+  min-height: var(--rc-control-h);
+  padding: .4rem 1.1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--rc-accent);
+  background: var(--rc-card);
+  border: 1px solid var(--rc-accent);
+  border-radius: var(--rc-radius);
+  cursor: pointer;
+}
+.ransom-crop-button:hover { background: var(--rc-accent-soft); }
+.ransom-crop-button:active { background: var(--rc-border); }
+.ransom-crop-button:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 2px;
+}
+
+/* Azioni principali: pieno */
+.ransom-crop-button--add,
+.ransom-crop-button--download {
+  color: var(--rc-card);
+  background: var(--rc-accent);
+}
+.ransom-crop-button--add:hover,
+.ransom-crop-button--download:hover {
+  background: var(--rc-accent-hover);
+  border-color: var(--rc-accent-hover);
+}
+
+/* Download: nessuna card, pulsante a tutta larghezza */
+.ransom-crop-group--download {
+  align-content: end;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.ransom-crop-group--download .ransom-crop-button {
+  width: 100%;
+  min-height: 3rem;
+}
+
+/* Area immagine */
+[data-ransom-crop-target="stage"] {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: auto;
+  touch-action: pan-x pan-y;
+  line-height: 0;
+  background:
+    conic-gradient(var(--rc-card) 25%, var(--rc-bg) 0 50%, var(--rc-card) 0 75%, var(--rc-bg) 0)
+    0 0 / 1rem 1rem;
+  border: 1px solid var(--rc-border-strong);
+  border-radius: var(--rc-radius);
+}
+[data-ransom-crop-target="image"] {
+  display: block;
+  max-width: 100%;
+}
+
+@media (min-width: 40rem) {
+  .ransom-crop-button { justify-self: start; }
+  .ransom-crop-group--download .ransom-crop-button { justify-self: stretch; }
+}

@@ -1,0 +1,11 @@
+<%# Form di upload immagine %>
+<%= turbo_frame_tag "ransom_crop" do %>
+
+  <h1>Carica un'immagine</h1>
+
+  <%= form_with url: images_path, multipart: true do |f| %>
+    <%= f.file_field :image, accept: "image/jpeg,image/png,image/webp", required: true %>
+    <%= f.submit "Carica" %>
+  <% end %>
+
+<% end %>

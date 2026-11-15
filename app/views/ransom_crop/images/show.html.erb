@@ -1,0 +1,127 @@
+<%# Editor: porzioni trascinabili sopra l'immagine %>
+
+<%= turbo_frame_tag "ransom_crop" do %>
+
+<div data-controller="ransom-crop"
+  data-ransom-crop-image-url-value="<%= file_image_path(@token) %>"
+  data-ransom-crop-default-json-value="<%= @default_json %>">
+
+  <div class="ransom-crop-toolbar">
+
+    <!-- Creazione di una porzione di ritaglio -->
+    <fieldset class="ransom-crop-group ransom-crop-group--add">
+      <legend class="ransom-crop-group__title">Aggiungi componente</legend>
+
+      <!-- Nome della porzione di ritaglio -->
+      <div class="ransom-crop-field ransom-crop-field--text"> 
+        <label class="ransom-crop-field__label" for="portion-name">Nome</label>
+        <input 
+          class="ransom-crop-field__input"
+          type="text" 
+          
+          id="portion-name"
+          name="portion_name"
+          
+          placeholder="Nome porzione" 
+          
+          data-ransom-crop-target="name">
+      </div>
+
+      <!-- Colore della porzione di ritaglio -->
+      <div class="ransom-crop-field ransom-crop-field--color">
+        <label class="ransom-crop-field__label" for="portion-color">Colore</label>
+        <input 
+          class="ransom-crop-field__input" 
+          type="color" 
+
+          id="portion-color"
+          name="portion_color"
+
+          value="#ff0000" 
+          data-ransom-crop-target="color">
+      </div>
+
+      <!-- Pulsante per l'aggiunta della porzione di ritaglio -->
+      <button 
+        class="ransom-crop-button ransom-crop-button--add"
+        type="button" 
+        data-action="ransom-crop#addRegion">
+          Aggiungi porzione
+      </button>
+    </fieldset>
+
+    <!-- Caricamento di una disposizione di porzioni di ritaglio tramite
+         JSON -->
+    <fieldset class="ransom-crop-group ransom-crop-group--json">
+      <legend class="ransom-crop-group__title">Disposizione JSON</legend>
+
+      <!-- Campo per l'immissione del codice JSON -->
+      <div class="ransom-crop-field ransom-crop-field--textarea">
+        <label class="ransom-crop-field__label" for="layout-json">JSON</label>
+        <textarea 
+          class="ransom-crop-field__input" 
+          id="layout-json" 
+          name="layout_json"
+          rows="6"
+          placeholder="Incolla JSON porzioni" 
+          data-ransom-crop-target="json"></textarea>
+      </div>
+
+      <button 
+        class="ransom-crop-button ransom-crop-button--load"
+        
+        type="button" 
+        data-action="ransom-crop#loadJson">
+          Carica JSON
+      </button>
+
+    </fieldset>
+
+
+    <fieldset class="ransom-crop-group ransom-crop-group--zoom">
+      <legend class="ransom-crop-group__title">Zoom</legend>
+
+      <div class="ransom-crop-field ransom-crop-field--number">
+        <label class="ransom-crop-field__label" for="zoom-value">Percentuale</label>
+          
+
+        <div style="display:flex;">
+          <input 
+            class="ransom-crop-field__input"
+            type="number" 
+
+            id="zoom-value"
+            name="zoom_value"
+
+            min="10" 
+            max="400" 
+            step="5" 
+            value="100" 
+            
+            data-ransom-crop-target="zoom"
+            data-action="input->ransom-crop#applyZoom">
+
+            <span class="ransom-crop-field__suffix">%</span>   
+          </div> 
+      </div>
+
+
+    </fieldset>
+
+    <%= form_with url: crop_image_path(@token),
+      data: { turbo: false, action: "submit->ransom-crop#prepare" },
+      class: "ransom-crop-group ransom-crop-group--download" do |f| %>
+      
+      <%= f.hidden_field :regions, data: { ransom_crop_target: "regions" } %>
+      <%= f.submit "Ritaglia e scarica zip", 
+        class: "ransom-crop-button ransom-crop-button--download" %>
+    <% end %>
+  </div>
+
+  <div data-ransom-crop-target="stage">
+    <img data-ransom-crop-target="image"
+         src="<%= file_image_path(@token) %>">
+  </div>
+</div>
+
+<% end %>
